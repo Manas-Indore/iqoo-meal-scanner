@@ -4,6 +4,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 import { runDay1Test } from './ai/day1-test.js'
+import CameraCapture from './camera/CameraCapture'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
   </button>
   <pre>{result}</pre>
 </section>
+      <CameraCapture />
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
