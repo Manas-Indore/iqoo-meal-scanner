@@ -3,12 +3,29 @@ import heroImg from './assets/hero.png'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
+import { runDay1Test } from './ai/day1-test.js'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [result, setResult] = useState('')
 
   return (
     <>
+      <section style={{ padding: '20px', border: '2px dashed orange' }}>
+      <h2>Day 1 AI Test</h2>
+      <img id="testImage" src="/test-photo.jpg" width="300" alt="test food" />
+      <br />
+      <button
+        onClick={async () => {
+        setResult('Running...')
+        const predictions = await runDay1Test()
+        setResult(JSON.stringify(predictions, null, 2))
+      }}
+      >
+    Run MobileNet Test
+  </button>
+  <pre>{result}</pre>
+</section>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
