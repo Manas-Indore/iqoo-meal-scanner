@@ -5,6 +5,7 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 import { runDay1Test } from './ai/day1-test.js'
 import CameraCapture from './camera/CameraCapture'
+import { addScan, getAllScans } from "./storage/db";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,18 @@ function App() {
   <pre>{result}</pre>
 </section>
       <CameraCapture />
+        <button
+        onClick={async () => {
+          await addScan({
+            label: "dal_tadka",
+            nutrition: { protein_g: 8, carbs_g: 20, sugar_g: 1, calories: 180 },
+          });
+          const all = await getAllScans();
+          console.log("All scans:", all);
+        }}
+        >
+        Test Add Scan
+        </button>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
