@@ -6,10 +6,12 @@ import './App.css'
 import { runDay1Test } from './ai/day1-test.js'
 import CameraCapture from './camera/CameraCapture'
 import { addScan, getAllScans } from "./storage/db";
+import { runDay4Test } from './ai/day4-test.js'
 
 function App() {
   const [count, setCount] = useState(0)
   const [result, setResult] = useState('')
+  const [result4, setResult4] = useState('')
 
   return (
     <>
@@ -27,6 +29,19 @@ function App() {
     Run MobileNet Test
   </button>
   <pre>{result}</pre>
+</section>
+      <section style={{ padding: '20px', border: '2px dashed lime' }}>
+  <h2>Day 4 — Custom Model Test</h2>
+  <button
+    onClick={async () => {
+      setResult4('Running...')
+      const prediction = await runDay4Test()
+      setResult4(JSON.stringify(prediction, null, 2))
+    }}
+  >
+    Run Custom Model Test
+  </button>
+  <pre>{result4}</pre>
 </section>
       <CameraCapture />
         <button
