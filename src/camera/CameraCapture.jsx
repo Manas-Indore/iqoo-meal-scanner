@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { predictFood } from "../ai/predictFood";
+import { addScan } from "../storage/db";
 
 function CameraCapture() {
   const videoRef = useRef(null);
@@ -37,6 +38,9 @@ function CameraCapture() {
     const result = await predictFood(canvas);
     setPrediction(result);
     console.log("Prediction:", result);
+
+    await addScan(result); // auto-save to IndexedDB
+    console.log("Scan saved to database");
   } catch (err) {
     console.error("Prediction error:", err);
     setPrediction("Error scanning food");
