@@ -36,9 +36,7 @@ export async function runDay4Test() {
 
   // Load OUR model this time, from the public/model folder.
   // Vite serves public/ files directly, so '/model/model.json' works.
-  const model = await tf.loadLayersModel(
-    "/model/tfjs_model/content/drive/MyDrive/iqoo-hackathon indian-food-dataset.zip/tfjs_model/model.json",
-  );
+ const model = await tf.loadLayersModel("/model/model.json");
   console.log("Custom model loaded.");
 
   const imgElement = document.getElementById("testImage");
