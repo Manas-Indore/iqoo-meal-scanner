@@ -9,11 +9,13 @@ import { addScan, getAllScans } from "./storage/db";
 import { runDay4Test } from './ai/day4-test.js'
 import { generateSuggestion } from "./suggestions/suggestionEngine";
 import { getLast7DaysScans } from "./storage/db";
+import { predictFood } from './ai/predictFood.js';
 
 function App() {
   const [count, setCount] = useState(0)
   const [result, setResult] = useState('')
   const [result4, setResult4] = useState('')
+  const [finalResult, setFinalResult] = useState('')
 
   return (
     <>
@@ -44,6 +46,20 @@ function App() {
     Run Custom Model Test
   </button>
   <pre>{result4}</pre>
+</section>
+    <section style={{ padding: '20px', border: '2px dashed cyan' }}>
+  <h2>Final predictFood() Test</h2>
+  <button
+    onClick={async () => {
+      setFinalResult('Running...')
+      const imgElement = document.getElementById('testImage')
+      const result = await predictFood(imgElement)
+      setFinalResult(JSON.stringify(result, null, 2))
+    }}
+  >
+    Run predictFood()
+  </button>
+  <pre>{finalResult}</pre>
 </section>
       <CameraCapture />
         <button
