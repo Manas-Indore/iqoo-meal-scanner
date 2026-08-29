@@ -37,6 +37,7 @@ let cachedModel = null;
 
 async function getModel() {
   if (!cachedModel) {
+    await tf.ready(); // ensures a backend is fully initialized before use
     cachedModel = await tf.loadLayersModel("/model/model.json");
   }
   return cachedModel;

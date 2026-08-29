@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
+import { predictFood } from "../ai/predictFood";
 
 function CameraCapture() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
   const [stream, setStream] = useState(null);
+  const [prediction, setPrediction] = useState(null);
 
   const startCamera = async () => {
     try {
@@ -19,16 +21,27 @@ function CameraCapture() {
     }
   };
 
-  const capturePhoto = () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageDataUrl = canvas.toDataURL("image/png");
-    setCapturedImage(imageDataUrl);
-  };
+  const capturePhoto = async () => {
+  const video = videoRef.current;
+  const canvas = canvasRef.current;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imageDataUrl = canvas.toDataURL("image/png");
+  setCapturedImage(imageDataUrl);
+
+  // Run AI prediction on the captured frame
+  setPrediction("Scanning...");
+  try {
+    const result = await predictFood(canvas);
+    setPrediction(result);
+    console.log("Prediction:", result);
+  } catch (err) {
+    console.error("Prediction error:", err);
+    setPrediction("Error scanning food");
+  }
+};
 
   return (
     <div style={{ textAlign: "center", padding: "1rem" }}>
@@ -60,6 +73,15 @@ function CameraCapture() {
           />
         </div>
       )}
+
+      {prediction && typeof prediction === "object" && (
+      <div style={{ marginTop: "1rem", textAlign: "left", display: "inline-block" }}>
+        <h3>Detected: {prediction.label}</h3>
+        <p>Confidence: {(prediction.confidence * 100).toFixed(1)}%</p>
+        <p>Protein: {prediction.nutrition.protein_g}g | Carbs: {prediction.nutrition.carbs_g}g | Sugar: {prediction.nutrition.sugar_g}g | Calories: {prediction.nutrition.calories}</p>
+      </div>
+    )}
+    {prediction && typeof prediction === "string" && <p>{prediction}</p>}
     </div>
   );
 }
