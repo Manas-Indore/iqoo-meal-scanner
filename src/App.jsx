@@ -7,6 +7,8 @@ import { runDay1Test } from './ai/day1-test.js'
 import CameraCapture from './camera/CameraCapture'
 import { addScan, getAllScans } from "./storage/db";
 import { runDay4Test } from './ai/day4-test.js'
+import { generateSuggestion } from "./suggestions/suggestionEngine";
+import { getLast7DaysScans } from "./storage/db";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -75,6 +77,16 @@ function App() {
         >
           Count is {count}
         </button>
+
+        <button
+  onClick={async () => {
+    const scans = await getLast7DaysScans();
+    const suggestion = generateSuggestion(scans);
+    console.log("Suggestion:", suggestion);
+  }}
+>
+  Test Suggestion
+</button>
       </section>
 
       <div className="ticks"></div>
