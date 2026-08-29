@@ -12,6 +12,7 @@
   "dependencies": {
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
     "dexie": "^4.4.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"

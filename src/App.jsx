@@ -10,12 +10,16 @@ import { runDay4Test } from './ai/day4-test.js'
 import { generateSuggestion } from "./suggestions/suggestionEngine";
 import { getLast7DaysScans } from "./storage/db";
 import { predictFood } from './ai/predictFood.js';
+import { runBatchTest } from './ai/batchTest.js'
+import { runBackendBenchmark } from './ai/backendBenchmark.js'
 
 function App() {
   const [count, setCount] = useState(0)
   const [result, setResult] = useState('')
   const [result4, setResult4] = useState('')
   const [finalResult, setFinalResult] = useState('')
+  const [batchResults, setBatchResults] = useState('')
+  const [benchmarkResults, setBenchmarkResults] = useState('')
 
   return (
     <>
@@ -60,6 +64,32 @@ function App() {
     Run predictFood()
   </button>
   <pre>{finalResult}</pre>
+</section>
+    <section style={{ padding: '20px', border: '2px dashed magenta' }}>
+  <h2>Day 5-6 — Batch Test (multiple photos)</h2>
+  <button
+    onClick={async () => {
+      setBatchResults('Running batch test... check console for live progress')
+      const results = await runBatchTest()
+      setBatchResults(JSON.stringify(results, null, 2))
+    }}
+  >
+    Run Batch Test
+  </button>
+  <pre>{batchResults}</pre>
+</section>
+    <section style={{ padding: '20px', border: '2px dashed yellow' }}>
+  <h2>Day 5-6 — Backend Benchmark (WebGL vs WebGPU)</h2>
+  <button
+    onClick={async () => {
+      setBenchmarkResults('Running benchmark... check console for details')
+      const results = await runBackendBenchmark()
+      setBenchmarkResults(JSON.stringify(results, null, 2))
+    }}
+  >
+    Run Backend Benchmark
+  </button>
+  <pre>{benchmarkResults}</pre>
 </section>
       <CameraCapture />
         <button
