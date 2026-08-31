@@ -76,3 +76,21 @@ Each predicted food label maps to a nutrition lookup table (protein, carbs,
 sugar, calories per typical serving), built from standard Indian nutrition
 references. This combines with the model's prediction to give users an
 instant estimate of what they just ate — all without a single network call.
+
+## Voice Input — Requires Internet (Tested)
+
+We added an optional voice input feature for quick manual meal logging
+(e.g., saying "I ate 500 grams of rice"), using the browser's built-in
+Web Speech API. We explicitly tested this in both connected and offline
+(airplane mode) conditions:
+
+- **With internet connected:** works correctly, accurately transcribes speech
+- **With internet disconnected:** fails immediately with a network error
+
+This is because Chrome's Web Speech API sends audio to Google's servers for
+processing — it is not an on-device model, unlike our core food-scanning
+AI. This means our **camera-based scanning remains fully offline** (verified
+in airplane mode), while voice input specifically requires connectivity.
+We're upfront about this distinction rather than overclaiming full offline
+support for every feature. A future version could integrate an on-device
+speech recognition model to close this gap.
