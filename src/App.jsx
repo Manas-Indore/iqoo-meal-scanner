@@ -4,6 +4,7 @@ import CameraCapture from './camera/CameraCapture'
 import TodayScreen from './components/TodayScreen'
 import WeekScreen from './components/WeekScreen'
 import SuggestionScreen from './components/SuggestionScreen'
+import ManualEntry from './components/ManualEntry'
 
 function App() {
   const [activeTab, setActiveTab] = useState('camera')
@@ -37,6 +38,9 @@ function App() {
         <button style={tabStyle('suggestion')} onClick={() => setActiveTab('suggestion')}>
           Suggestion
         </button>
+        <button style={tabStyle('manual')} onClick={() => setActiveTab('manual')}>
+          Add Manually
+        </button>
       </div>
 
       <div>
@@ -44,6 +48,7 @@ function App() {
         {activeTab === 'today' && <TodayScreen />}
         {activeTab === 'week' && <WeekScreen />}
         {activeTab === 'suggestion' && <SuggestionScreen />}
+        {activeTab === 'manual' && <ManualEntry />}
       </div>
     </div>
   )

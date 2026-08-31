@@ -8,11 +8,12 @@ function CameraCapture() {
   const [capturedImage, setCapturedImage] = useState(null);
   const [stream, setStream] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [mealType, setMealType] = useState("breakfast");
 
   const startCamera = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "environment" }, // rear camera
+        video: { facingMode: "environment" },
       });
       videoRef.current.srcObject = mediaStream;
       setStream(mediaStream);
@@ -23,29 +24,28 @@ function CameraCapture() {
   };
 
   const capturePhoto = async () => {
-  const video = videoRef.current;
-  const canvas = canvasRef.current;
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  const imageDataUrl = canvas.toDataURL("image/png");
-  setCapturedImage(imageDataUrl);
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const imageDataUrl = canvas.toDataURL("image/png");
+    setCapturedImage(imageDataUrl);
 
-  // Run AI prediction on the captured frame
-  setPrediction("Scanning...");
-  try {
-    const result = await predictFood(canvas);
-    setPrediction(result);
-    console.log("Prediction:", result);
+    setPrediction("Scanning...");
+    try {
+      const result = await predictFood(canvas);
+      setPrediction(result);
+      console.log("Prediction:", result);
 
-    await addScan(result); // auto-save to IndexedDB
-    console.log("Scan saved to database");
-  } catch (err) {
-    console.error("Prediction error:", err);
-    setPrediction("Error scanning food");
-  }
-};
+      await addScan(result, mealType);
+      console.log("Scan saved to database");
+    } catch (err) {
+      console.error("Prediction error:", err);
+      setPrediction("Error scanning food");
+    }
+  };
 
   return (
     <div style={{ textAlign: "center", padding: "1rem" }}>
@@ -57,6 +57,12 @@ function CameraCapture() {
         playsInline
         style={{ width: "100%", maxWidth: "400px", background: "#000" }}
       />
+
+      <div style={{ margin: "1rem 0" }}>
+        <button onClick={() => setMealType("breakfast")} style={{ fontWeight: mealType === "breakfast" ? "bold" : "normal" }}>Breakfast</button>
+        <button onClick={() => setMealType("lunch")} style={{ fontWeight: mealType === "lunch" ? "bold" : "normal" }}>Lunch</button>
+        <button onClick={() => setMealType("dinner")} style={{ fontWeight: mealType === "dinner" ? "bold" : "normal" }}>Dinner</button>
+      </div>
 
       <div style={{ margin: "1rem 0" }}>
         <button onClick={startCamera}>Start Camera</button>
@@ -79,13 +85,13 @@ function CameraCapture() {
       )}
 
       {prediction && typeof prediction === "object" && (
-      <div style={{ marginTop: "1rem", textAlign: "left", display: "inline-block" }}>
-        <h3>Detected: {prediction.label}</h3>
-        <p>Confidence: {(prediction.confidence * 100).toFixed(1)}%</p>
-        <p>Protein: {prediction.nutrition.protein_g}g | Carbs: {prediction.nutrition.carbs_g}g | Sugar: {prediction.nutrition.sugar_g}g | Calories: {prediction.nutrition.calories}</p>
-      </div>
-    )}
-    {prediction && typeof prediction === "string" && <p>{prediction}</p>}
+        <div style={{ marginTop: "1rem", textAlign: "left", display: "inline-block" }}>
+          <h3>Detected: {prediction.label}</h3>
+          <p>Confidence: {(prediction.confidence * 100).toFixed(1)}%</p>
+          <p>Protein: {prediction.nutrition.protein_g}g | Carbs: {prediction.nutrition.carbs_g}g | Sugar: {prediction.nutrition.sugar_g}g | Calories: {prediction.nutrition.calories}</p>
+        </div>
+      )}
+      {prediction && typeof prediction === "string" && <p>{prediction}</p>}
     </div>
   );
 }
