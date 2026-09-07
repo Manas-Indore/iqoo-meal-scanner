@@ -81,7 +81,7 @@ function CameraCapture() {
       <div style={{ margin: "1rem 0", display: "flex", justifyContent: "center", gap: "0.75rem" }}>
         <button
           onClick={startCamera}
-          style={{ padding: "0.6rem 1.2rem", borderRadius: "8px", border: "1px solid #ccc", background: "#fff" }}
+          style={{ padding: "0.6rem 1.2rem", borderRadius: "8px", border: "1px solid #ccc", background: "#fff", color: "#333" }}
         >
           Start Camera
         </button>

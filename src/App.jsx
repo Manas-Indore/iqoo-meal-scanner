@@ -24,22 +24,10 @@ function App() {
 
   return (
   <div style={{ maxWidth: '480px', margin: '0 auto', minHeight: '100vh', background: '#f7f7fa' }}>
-    <h1 style={{ textAlign: 'center', padding: '1.25rem 0 0.75rem', margin: 0, fontSize: '1.4rem' }}>
-      🍽️ Meal Scanner
+    <h1 style={{ textAlign: 'center', padding: '1.25rem 0 0.75rem', margin: 0, fontSize: '1.4rem', color: '#222' }}>
+    🍽️ Meal Scanner
     </h1>
 
-    <section style={{ padding: '20px', border: '2px dashed pink' }}>
-      <h2>Day 10 — Voice Parse Test</h2>
-      <button onClick={() => {
-        console.log(parseVoiceInput("I ate a plate of dosa"));
-        console.log(parseVoiceInput("had 2 idlis for breakfast"));
-        console.log(parseVoiceInput("just some naan"));
-        console.log(parseVoiceInput("ate pizza"));
-        console.log(parseVoiceInput("I had biryani"));
-      }}>
-        Test Voice Parsing
-      </button>
-    </section>
 
     <div style={{ display: 'flex', borderBottom: '1px solid #e0e0e0', background: '#fff', position: 'sticky', top: 0, zIndex: 10 }}>
       <button style={tabStyle('camera')} onClick={() => setActiveTab('camera')}>Camera</button>
