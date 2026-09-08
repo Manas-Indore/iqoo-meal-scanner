@@ -1,16 +1,39 @@
-# React + Vite
+# MealScanner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An on-device AI meal scanner for Indian home food. Scans your plate, identifies 
+food using a fine-tuned TensorFlow.js model running fully offline on your 
+phone's Snapdragon NPU/GPU, tracks weekly eating patterns, and proactively 
+suggests what to eat next.
 
-Currently, two official plugins are available:
+Built for iQOO Hackathon 2026.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 Live demo: https://beamish-granita-706f91.netlify.app/
 
-## React Compiler
+## Features
+- Real-time camera-based food scanning (on-device AI, works offline)
+- Meal categorization (breakfast/lunch/dinner)
+- Weekly pattern tracking with progress visualization
+- Rule-based proactive suggestions with deep-link ordering
+- Voice input for hands-free logging
+- Manual entry fallback
+- Installable PWA, fully offline-capable for core features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
+- React + Vite (PWA)
+- TensorFlow.js (on-device inference, fine-tuned MobileNet)
+- IndexedDB (Dexie.js) for local storage
+- Web Speech API for voice input
+- Deployed on Netlify
 
-## Expanding the ESLint configuration
+## Team
+- Manas — App architecture, camera, storage, UI, PWA
+- Hazel — AI model training, TensorFlow.js integration, voice parsing
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+- `src/camera/` — camera capture
+- `src/ai/` — model inference (predictFood.js) + nutrition data
+- `src/voice/` — voice input parsing
+- `src/storage/` — IndexedDB layer
+- `src/suggestions/` — rule-based suggestion engine
+- `src/components/` — UI screens
+- `model/` — training scripts, converted TF.js model files
