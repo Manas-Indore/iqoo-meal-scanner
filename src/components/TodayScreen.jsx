@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllScans } from "../storage/db";
 import { colors, cardStyle } from "../theme";
 
-const DAILY_GOALS = { protein_g: 50, carbs_g: 250, calories: 2000 };
+const DAILY_GOALS = { protein_g: 140, carbs_g: 250, calories: 2000 };
 
 function ProgressBar({ label, value, goal, color }) {
   const pct = Math.min((value / goal) * 100, 100);

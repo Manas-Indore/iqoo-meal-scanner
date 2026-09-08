@@ -2,7 +2,7 @@
 // Takes an array of scans (from getLast7DaysScans) and returns a suggestion
 
 const DAILY_TARGETS = {
-  protein_g: 50,
+  protein_g: 140,
   sugar_g: 25, // max, not min
 };
 
